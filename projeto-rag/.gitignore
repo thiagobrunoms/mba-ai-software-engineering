@@ -1,0 +1,27 @@
+# Environment
+.env
+
+# Python virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# PDFs (dados de treino/ingestão — geralmente grandes)
+*.pdf
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
