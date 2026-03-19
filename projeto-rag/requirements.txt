@@ -17,6 +17,7 @@ jiter==0.13.0
 jsonpatch==1.33
 jsonpointer==3.0.0
 langchain==1.2.10
+langchainhub
 langchain-core==1.2.17
 langchain-classic==1.0.2
 langchain-community==0.4.1
@@ -33,7 +34,6 @@ langsmith==0.7.9
 openai==2.24.0
 orjson==3.11.7
 ormsgpack==1.12.2
-packaging==26.0
 pillow==12.1.0
 pyasn1==0.6.2
 pyasn1_modules==0.4.2

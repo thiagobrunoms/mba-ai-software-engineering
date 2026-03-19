@@ -85,5 +85,5 @@ class RAGInjector:
 
 
 if __name__ == "__main__":
-    pdf_path = Path(__file__).parent / "estoicismo.pdf"
+    pdf_path = Path(__file__).parent.parent / "estoicismo.pdf"
     RAGInjector(pdf_path).run()
