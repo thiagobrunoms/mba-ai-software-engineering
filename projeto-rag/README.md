@@ -5,10 +5,18 @@ RAG (Retrieval-Augmented Generation) using LangChain, PGVector, and OpenAI. The 
 ## Prerequisites
 
 - Python 3.11+
-- PostgreSQL with the `pgvector` extension
+- Docker & Docker Compose
 - OpenAI API key
 
 ## Setup
+
+### 1. Start the database
+
+```bash
+docker compose up -d
+```
+
+### 2. Configure environment variables
 
 Create a `.env` file at the project root:
 
@@ -18,7 +26,7 @@ PGVECTOR_COLLECTION=collection_name
 OPENAI_API_KEY=sk-...
 ```
 
-Install dependencies:
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -26,13 +34,13 @@ pip install -r requirements.txt
 
 ## Document Ingestion
 
-Place the desired PDF in `src/` and run:
+Place the PDF at the project root as `document.pdf` and run:
 
 ```bash
 python src/ingest.py
 ```
 
-This loads the PDF, splits it into chunks, and stores the embeddings in PGVector.
+This loads the PDF, splits it into chunks of 1000 characters (overlap 150), generates embeddings, and stores them in PGVector.
 
 ## search.py
 
@@ -60,11 +68,15 @@ python src/chat.py
 ```
 Chat RAG iniciado. Digite 'sair' para encerrar.
 
-Você: Quais contrapesos a antiga disciplina estoica oferece?
-Assistente: ...
+Você: o que é estoicismo?
 
-Você: sair
-Encerrando chat. Até logo!
+Assistente: O estoicismo é uma filosofia prática, criada para orientar a vida humana em meio à instabilidade, ao sofrimento e à incerteza. Ele propõe um modo de atravessar perdas, desejos, medos, conflitos e responsabilidades com lucidez, disciplina e senso de realidade. O estoicismo não promete uma existência sem dor, mas ensina a viver de acordo com a natureza, aceitando a impermanência e agindo com integridade. Além disso, enfatiza a importância do caráter, da justiça e da lucidez, promovendo uma vida de ordem interior em meio aos problemas.
+
+Você: Quantos clientes temos em 2024?
+
+Assistente: Não tenho informações necessárias para responder sua pergunta.
 ```
+
+> type "sair" to finish the chat.
 
 > If a question has no answer in the ingested documents, the system will say so instead of making one up.

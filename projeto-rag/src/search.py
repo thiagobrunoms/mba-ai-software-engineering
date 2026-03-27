@@ -52,14 +52,14 @@ class VectorStore:
             use_jsonb=True,
         )
 
-    def search(self, query: str, k: int = 3) -> list[tuple[Document, float]]:
+    def search(self, query: str, k: int = 10) -> list[tuple[Document, float]]:
         return self._store.similarity_search_with_score(query, k=k)
 
 
 class Retriever:
     """Busca documentos relevantes e filtra pelo score de distância cosseno."""
 
-    def __init__(self, store: VectorStore, score_threshold: float = SCORE_THRESHOLD, k: int = 3):
+    def __init__(self, store: VectorStore, score_threshold: float = SCORE_THRESHOLD, k: int = 10):
         self._store = store
         self._threshold = score_threshold
         self._k = k
@@ -80,10 +80,22 @@ class RAGChain:
     """
 
     _PROMPT = ChatPromptTemplate.from_template(
-        "Responda à pergunta usando APENAS o contexto abaixo.\n"
-        "Se o contexto não contiver informação suficiente, responda: '{no_knowledge_msg}'\n\n"
-        "Contexto:\n{context}\n\n"
-        "Pergunta: {question}"
+        "CONTEXTO:\n{context}\n\n"
+        "REGRAS:\n"
+        "- Responda somente com base no CONTEXTO.\n"
+        "- Se a informação não estiver explicitamente no CONTEXTO, responda:\n"
+        '  "Não tenho informações necessárias para responder sua pergunta."\n'
+        "- Nunca invente ou use conhecimento externo.\n"
+        "- Nunca produza opiniões ou interpretações além do que está escrito.\n\n"
+        "EXEMPLOS DE PERGUNTAS FORA DO CONTEXTO:\n"
+        'Pergunta: "Qual é a capital da França?"\n'
+        'Resposta: "Não tenho informações necessárias para responder sua pergunta."\n\n'
+        'Pergunta: "Quantos clientes temos em 2024?"\n'
+        'Resposta: "Não tenho informações necessárias para responder sua pergunta."\n\n'
+        'Pergunta: "Você acha isso bom ou ruim?"\n'
+        'Resposta: "Não tenho informações necessárias para responder sua pergunta."\n\n'
+        "PERGUNTA DO USUÁRIO:\n{question}\n\n"
+        'RESPONDA A "PERGUNTA DO USUÁRIO"'
     )
 
     def __init__(self, config: Config):

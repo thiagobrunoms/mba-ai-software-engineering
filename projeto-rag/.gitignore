@@ -16,9 +16,6 @@ dist/
 build/
 *.egg-info/
 
-# PDFs (dados de treino/ingestão — geralmente grandes)
-*.pdf
-
 # IDE
 .vscode/
 .idea/
