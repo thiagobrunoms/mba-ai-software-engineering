@@ -21,9 +21,11 @@ docker compose up -d
 Create a `.env` file at the project root:
 
 ```env
-PGVECTOR_URL=postgresql://user:password@localhost:5432/dbname
-PGVECTOR_COLLECTION=collection_name
-OPENAI_API_KEY=sk-...
+OPENAI_API_KEY=...
+GOOGLE_API_KEY=...
+OPENAI_MODEL=text-embedding-3-small
+PGVECTOR_URL=postgresql+psycopg://postgres:postgres@localhost:5432/rag
+PGVECTOR_COLLECTION=gpt5_collection
 ```
 
 ### 3. Install dependencies
